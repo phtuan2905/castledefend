@@ -394,7 +394,6 @@ GameObject:
   - component: {fileID: 931964972}
   - component: {fileID: 931964974}
   - component: {fileID: 931964975}
-  - component: {fileID: 931964976}
   m_Layer: 0
   m_Name: Ranger
   m_TagString: Untagged
@@ -505,20 +504,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rangerAttributes: {fileID: 0}
   rangerDetectNearestEnemy: {fileID: 0}
-  rangerSpawnBullet: {fileID: 0}
   nearestEnemy: {fileID: 0}
---- !u!114 &931964976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 931964971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 107add05f989846429e90357dd267ad5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  bulletDirection: {x: 0, y: 0}
 --- !u!1 &1487680433
 GameObject:
   m_ObjectHideFlags: 0

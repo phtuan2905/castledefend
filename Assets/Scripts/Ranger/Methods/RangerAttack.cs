@@ -6,7 +6,6 @@ public class RangerAttack : MonoBehaviour
 {
     public RangerAttributes rangerAttributes;
     public RangerDetectNearestEnemy rangerDetectNearestEnemy;
-    public RangerSpawnBullet rangerSpawnBullet;
 
     [SerializeField] private GameObject nearestEnemy;
     [SerializeField] private Vector2 bulletDirection;
@@ -15,7 +14,6 @@ public class RangerAttack : MonoBehaviour
     {
         rangerAttributes = GetComponent<RangerAttributes>();
         rangerDetectNearestEnemy = transform.Find("Detect Zone").GetComponent<RangerDetectNearestEnemy>();
-        rangerSpawnBullet = GetComponent<RangerSpawnBullet>();
     }
 
     void Update()
@@ -30,10 +28,20 @@ public class RangerAttack : MonoBehaviour
         if (nearestEnemy != null && !isAttacking)
         {
             isAttacking = true;
+
             bulletDirection = nearestEnemy.transform.position - transform.position;
-            rangerSpawnBullet.SpawnBullet(rangerAttributes.Bullet, rangerAttributes.BulletSpeed, rangerAttributes.Damage, bulletDirection);
+            SpawnBullet(rangerAttributes.Bullet, rangerAttributes.BulletSpeed, rangerAttributes.Damage, bulletDirection);
+
             yield return new WaitForSeconds(rangerAttributes.AttackSpeed);
+            
             isAttacking = false;
         }
+    }
+
+    void SpawnBullet(GameObject Bullet, float damage, float bulletSpeed, Vector2 direction)
+    {
+        GameObject bullet = Instantiate(Bullet, transform.position);
+        bullet.GetComponent<Bullet>().SetAttributes(damage, bulletSpeed, direction);
+        Debug.Log("Spawn bullet");
     }
 }

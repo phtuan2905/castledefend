@@ -17,11 +17,6 @@ public class RangerDetectNearestEnemy : MonoBehaviour
         GetComponent<CircleCollider2D>().radius = range;
     }
 
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag(enemyTag) && !enemnies.Contains(collision.gameObject) && enemnies.Count < maxEnemiesNumber)
@@ -46,8 +41,6 @@ public class RangerDetectNearestEnemy : MonoBehaviour
         }
     }
 
-    //private Vector2 nearestEnemyPosition;
-    //private float nearestEnemyDistance;
     public GameObject FindNearestEnemy()
     {
         if (enemnies.Count == 0)
@@ -56,11 +49,13 @@ public class RangerDetectNearestEnemy : MonoBehaviour
             return nearestEnemy;
         }
         nearestEnemy = enemnies[0];
+        float distance = Vector2.Distance(transform.position, nearestEnemy.transform.position);
         foreach (GameObject enemy in enemnies)
         {
-            if (Vector2.Distance(transform.position, enemy.transform.position) < Vector2.Distance(transform.position, nearestEnemy.transform.position))
+            if (Vector2.Distance(transform.position, enemy.transform.position) < distance)
             {
                 nearestEnemy = enemy;
+                distance = Vector2.Distance(transform.position, enemy.transform.position);
             }
         }
         rangerAttributes.NearestEnemy = nearestEnemy;
