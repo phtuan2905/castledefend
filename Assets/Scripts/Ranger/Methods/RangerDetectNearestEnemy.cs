@@ -4,66 +4,66 @@ using UnityEngine;
 
 public class RangerDetectNearestEnemy : MonoBehaviour
 {
-    private RangerAttributes rangerAttributes;
-    [SerializeField] private List<GameObject> enemies;
+    [SerializeField] private RangerAttributes rangerAttributes;
+    [SerializeField] private string enemyTag;
+    [SerializeField] private List<GameObject> enemnies;
     [SerializeField] private GameObject nearestEnemy;
     [SerializeField] [Range(0, 20)] private int maxEnemiesNumber;
-    [SerializeField] private string enemyTag;
-
+    [SerializeField] private float range;
     void Start()
     {
         rangerAttributes = transform.parent.GetComponent<RangerAttributes>();
-        GetComponent<CircleCollider2D>().radius = rangerAttributes.Range;
+        range = rangerAttributes.Range;
+        GetComponent<CircleCollider2D>().radius = range;
     }
 
     void Update()
     {
-        FindNearestEnemy();
+        
     }
 
-    //enemies manage
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(enemyTag) && enemies.Count < maxEnemiesNumber)
+        if (collision.gameObject.CompareTag(enemyTag) && !enemnies.Contains(collision.gameObject) && enemnies.Count < maxEnemiesNumber)
         {
-            enemies.Add(collision.gameObject);
+            enemnies.Add(collision.gameObject);
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(enemyTag) && enemies.Count < maxEnemiesNumber)
+        if (collision.gameObject.CompareTag(enemyTag) && !enemnies.Contains(collision.gameObject) && enemnies.Count < maxEnemiesNumber)
         {
-            enemies.Add(collision.gameObject);
+            enemnies.Add(collision.gameObject);
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(enemyTag))
+        if (collision.gameObject.CompareTag(enemyTag) && enemnies.Contains(collision.gameObject))
         {
-            enemies.Remove(collision.gameObject);
+            enemnies.Remove(collision.gameObject);
         }
     }
 
-    //find nearest enemy
-    private Vector2 nearestEnemyPosition;
-    private float nearestEnemyDistance;
-    void FindNearestEnemy()
+    //private Vector2 nearestEnemyPosition;
+    //private float nearestEnemyDistance;
+    public GameObject FindNearestEnemy()
     {
-        if (enemies.Count != 0)
+        if (enemnies.Count == 0)
         {
-            nearestEnemyPosition = enemies[0].transform.position;
-            nearestEnemyDistance = Vector2.Distance(transform.position, nearestEnemyPosition);
-            foreach (GameObject enemy in enemies)
+            nearestEnemy = null;
+            return nearestEnemy;
+        }
+        nearestEnemy = enemnies[0];
+        foreach (GameObject enemy in enemnies)
+        {
+            if (Vector2.Distance(transform.position, enemy.transform.position) < Vector2.Distance(transform.position, nearestEnemy.transform.position))
             {
-                if (Vector2.Distance(transform.position, enemy.transform.position) < nearestEnemyDistance)
-                {
-                    nearestEnemy = enemy;
-                    nearestEnemyPosition = nearestEnemy.transform.position;
-                    nearestEnemyDistance = Vector2.Distance(transform.position, nearestEnemy.transform.position);
-                }
+                nearestEnemy = enemy;
             }
         }
+        rangerAttributes.NearestEnemy = nearestEnemy;
+        return nearestEnemy;
     }
 }

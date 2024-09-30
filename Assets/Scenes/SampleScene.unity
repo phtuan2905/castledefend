@@ -225,31 +225,16 @@ GameObject:
   m_Component:
   - component: {fileID: 929220069}
   - component: {fileID: 929220068}
+  - component: {fileID: 929220070}
   - component: {fileID: 929220067}
-  - component: {fileID: 929220066}
+  - component: {fileID: 929220071}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Detect Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &929220066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 929220065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55ce2c5c4ea263e4187221a7c31cd77a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemies: []
-  nearestEnemy: {fileID: 0}
-  maxEnemiesNumber: 10
-  enemyTag: Monster
 --- !u!58 &929220067
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -352,6 +337,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 931964973}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &929220070
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929220065}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &929220071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929220065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ce2c5c4ea263e4187221a7c31cd77a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangerAttributes: {fileID: 0}
+  enemyTag: Monster
+  enemnies: []
+  nearestEnemy: {fileID: 0}
+  maxEnemiesNumber: 10
+  range: 0
 --- !u!1 &931964971
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,6 +394,7 @@ GameObject:
   - component: {fileID: 931964972}
   - component: {fileID: 931964974}
   - component: {fileID: 931964975}
+  - component: {fileID: 931964976}
   m_Layer: 0
   m_Name: Ranger
   m_TagString: Untagged
@@ -432,7 +463,7 @@ Transform:
   m_GameObject: {fileID: 931964971}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.26, y: 2.75, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -453,12 +484,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rangerSO: {fileID: 0}
   damage: 10
-  attackSpeed: 1
+  attackSpeed: 5
   range: 5
-  numberOfAttacks: 0
+  numberOfAttacks: 1
   bullet: {fileID: 0}
   bulletSpeed: 0
   enemyTag: 
+  nearestEnemy: {fileID: 0}
 --- !u!114 &931964975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,8 +504,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangerAttributes: {fileID: 0}
+  rangerDetectNearestEnemy: {fileID: 0}
+  rangerSpawnBullet: {fileID: 0}
   nearestEnemy: {fileID: 0}
-  isAttacking: 0
+--- !u!114 &931964976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931964971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107add05f989846429e90357dd267ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1487680433
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,8 +529,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1487680435}
   - component: {fileID: 1487680434}
-  - component: {fileID: 1487680437}
   - component: {fileID: 1487680436}
+  - component: {fileID: 1487680437}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Monster
@@ -554,7 +599,7 @@ Transform:
   m_GameObject: {fileID: 1487680433}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.3, y: -2.37, z: 0}
+  m_LocalPosition: {x: 4.01, y: 0.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

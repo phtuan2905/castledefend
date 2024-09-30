@@ -5,26 +5,35 @@ using UnityEngine;
 public class RangerAttack : MonoBehaviour
 {
     public RangerAttributes rangerAttributes;
-    [SerializeField] private GameObject nearestEnemy;
-    [SerializeField] private bool isAttacking;
+    public RangerDetectNearestEnemy rangerDetectNearestEnemy;
+    public RangerSpawnBullet rangerSpawnBullet;
 
-    public GameObject NearestEnemy { set { nearestEnemy = value; } }
+    [SerializeField] private GameObject nearestEnemy;
+    [SerializeField] private Vector2 bulletDirection;
+
     void Start()
     {
         rangerAttributes = GetComponent<RangerAttributes>();
+        rangerDetectNearestEnemy = transform.Find("Detect Zone").GetComponent<RangerDetectNearestEnemy>();
+        rangerSpawnBullet = GetComponent<RangerSpawnBullet>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        StartCoroutine(Attack());
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    bool isAttacking;
+    IEnumerator Attack()
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        nearestEnemy = rangerDetectNearestEnemy.FindNearestEnemy();
+        if (nearestEnemy != null && !isAttacking)
         {
-            
+            isAttacking = true;
+            bulletDirection = nearestEnemy.transform.position - transform.position;
+            rangerSpawnBullet.SpawnBullet(rangerAttributes.Bullet, rangerAttributes.BulletSpeed, rangerAttributes.Damage, bulletDirection);
+            yield return new WaitForSeconds(rangerAttributes.AttackSpeed);
+            isAttacking = false;
         }
     }
 }
