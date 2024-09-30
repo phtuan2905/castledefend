@@ -30,7 +30,7 @@ public class RangerAttack : MonoBehaviour
             isAttacking = true;
 
             bulletDirection = nearestEnemy.transform.position - transform.position;
-            SpawnBullet(rangerAttributes.Bullet, rangerAttributes.BulletSpeed, rangerAttributes.Damage, bulletDirection);
+            SpawnBullet(rangerAttributes.Bullet, rangerAttributes.Damage, rangerAttributes.BulletSpeed, bulletDirection);
 
             yield return new WaitForSeconds(rangerAttributes.AttackSpeed);
             
@@ -40,7 +40,7 @@ public class RangerAttack : MonoBehaviour
 
     void SpawnBullet(GameObject Bullet, float damage, float bulletSpeed, Vector2 direction)
     {
-        GameObject bullet = Instantiate(Bullet, transform.position);
+        GameObject bullet = Instantiate(Bullet, transform.position, Quaternion.FromToRotation(Vector3.up, transform.InverseTransformDirection(direction)));
         bullet.GetComponent<Bullet>().SetAttributes(damage, bulletSpeed, direction);
         Debug.Log("Spawn bullet");
     }

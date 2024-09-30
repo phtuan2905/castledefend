@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public Rigidbody2D rg2D;
+
     [SerializeField] private float damage;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private Vector2 direction;
-    void Awake()
+
+    void Start()
     {
-        
+        rg2D = GetComponent<Rigidbody2D>();    
     }
 
     void Update()
@@ -26,7 +29,7 @@ public class Bullet : MonoBehaviour
 
     void Move()
     {
-
+        rg2D.velocity = direction.normalized * bulletSpeed;
     }
 
     public void DestroySelf()
