@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private Vector2 direction;
-    [SerializeField] private CircleCollider2D range;
+    [SerializeField] private Collider2D range;
     [SerializeField] private string enemyTag;
 
     void Start()
@@ -40,7 +40,7 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(enemyTag))
         {
-            collision.GetComponent<ObjectReceiveHit>().ReceiveHit();
+            collision.GetComponent<ObjectReceiveHit>().ReceiveHit(damage);
             Destroy(gameObject);
         }
     }
