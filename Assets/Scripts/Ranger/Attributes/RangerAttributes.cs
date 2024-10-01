@@ -17,16 +17,12 @@ public class RangerAttributes : MonoBehaviour
     [Header("Changable")]
     [SerializeField] private GameObject nearestEnemy;
 
-    void Start()
-    {
-
-    }
-
     public float Damage { get { return damage; } }
     public float AttackSpeed { get { return attackSpeed; } }
     public float Range {  get { return range; } }
     public float NumberOfAttacks { get { return numberOfAttacks; } }
     public GameObject Bullet { get { return bullet; } }
     public float BulletSpeed { get { return bulletSpeed; } }
+    public string EnemyTag { get { return enemyTag; } }
     public GameObject NearestEnemy { set { nearestEnemy = value; } get { return nearestEnemy; } }
 }

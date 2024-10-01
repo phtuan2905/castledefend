@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RangerAttack : MonoBehaviour
 {
-    public RangerAttributes rangerAttributes;
-    public RangerDetectNearestEnemy rangerDetectNearestEnemy;
+    private RangerAttributes rangerAttributes;
+    private RangerDetectNearestEnemy rangerDetectNearestEnemy;
 
     [SerializeField] private GameObject nearestEnemy;
     [SerializeField] private Vector2 bulletDirection;
@@ -30,7 +30,9 @@ public class RangerAttack : MonoBehaviour
             isAttacking = true;
 
             bulletDirection = nearestEnemy.transform.position - transform.position;
-            SpawnBullet(rangerAttributes.Bullet, rangerAttributes.Damage, rangerAttributes.BulletSpeed, bulletDirection);
+            CircleCollider2D range = transform.Find("Detect Zone").GetComponent<CircleCollider2D>();
+            SpawnBullet(rangerAttributes.Bullet, rangerAttributes.Damage, rangerAttributes.BulletSpeed, bulletDirection, range, rangerAttributes.EnemyTag);
+            Debug.DrawRay(transform.position, bulletDirection, Color.red, 1f);
 
             yield return new WaitForSeconds(rangerAttributes.AttackSpeed);
             
@@ -38,10 +40,10 @@ public class RangerAttack : MonoBehaviour
         }
     }
 
-    void SpawnBullet(GameObject Bullet, float damage, float bulletSpeed, Vector2 direction)
+    void SpawnBullet(GameObject Bullet, float damage, float bulletSpeed, Vector2 direction, CircleCollider2D range, string enemyTag)
     {
         GameObject bullet = Instantiate(Bullet, transform.position, Quaternion.FromToRotation(Vector3.up, transform.InverseTransformDirection(direction)));
-        bullet.GetComponent<Bullet>().SetAttributes(damage, bulletSpeed, direction);
-        Debug.Log("Spawn bullet");
+        bullet.GetComponent<Bullet>().SetAttributes(damage, bulletSpeed, direction, range, enemyTag);
+        //Debug.Log("Spawn bullet");
     }
 }

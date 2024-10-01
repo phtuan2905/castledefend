@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public Rigidbody2D rg2D;
+    private Rigidbody2D rg2D;
 
     [SerializeField] private float damage;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private Vector2 direction;
+    [SerializeField] private CircleCollider2D range;
+    [SerializeField] private string enemyTag;
 
     void Start()
     {
@@ -20,11 +22,13 @@ public class Bullet : MonoBehaviour
         Move();
     }
 
-    public void SetAttributes(float Damage, float BulletSpeed, Vector2 Direction)
+    public void SetAttributes(float Damage, float BulletSpeed, Vector2 Direction, CircleCollider2D Range, string EnemyTag)
     {
         damage = Damage;
         bulletSpeed = BulletSpeed;
         direction = Direction;
+        range = Range;
+        enemyTag = EnemyTag;
     }
 
     void Move()
@@ -32,8 +36,20 @@ public class Bullet : MonoBehaviour
         rg2D.velocity = direction.normalized * bulletSpeed;
     }
 
-    public void DestroySelf()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        if (collision.gameObject.CompareTag(enemyTag))
+        {
+            collision.GetComponent<ObjectReceiveHit>().ReceiveHit();
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision == range)
+        {
+            Destroy(gameObject);
+        }
     }
 }
