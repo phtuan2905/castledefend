@@ -6,6 +6,6 @@ public class FighterStrike : MonoBehaviour
 {
     public void Strike()
     {
-
+        Debug.Log("Strike");
     }
 }

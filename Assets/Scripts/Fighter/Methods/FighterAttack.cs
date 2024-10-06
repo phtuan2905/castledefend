@@ -5,12 +5,14 @@ using UnityEngine.Analytics;
 
 public class FighterAttack : MonoBehaviour
 {
+    public ObjectAttributes objectAttributes;
     public FighterAttributes fighterAttributes;
 
     [SerializeField] private bool canAttack;
-    [SerializeField] private List<GameObject> enemies;
+    private LinkedList<GameObject> enemies = new LinkedList<GameObject>();
     void Start()
     {
+        objectAttributes = GetComponent<ObjectAttributes>();
         fighterAttributes = GetComponent<FighterAttributes>();
     }
     void Update()
@@ -20,35 +22,82 @@ public class FighterAttack : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag(fighterAttributes.EnemyTag))
+        if (collision.gameObject.CompareTag(objectAttributes.EnemyTag))
         {
             canAttack = true;
-            enemies.Add(collision.gameObject);
+            if (enemies.Find(collision.gameObject) == null)
+            {
+                enemies.AddLast(collision.gameObject);
+            }
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag(objectAttributes.EnemyTag))
+        {
+            canAttack = true;
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag(fighterAttributes.EnemyTag))
+        if (collision.gameObject.CompareTag(objectAttributes.EnemyTag))
         {
-            canAttack = false;
             enemies.Remove(collision.gameObject);
+            if (enemies.Count == 0)
+            {
+                canAttack = false;
+            }
         }
     }
 
-    private bool isAttacking = false;
+    bool isAttacking = false;
     IEnumerator Attack()
     {   
         if (!isAttacking && canAttack)
         {
             isAttacking = true;
 
-            for (int i = 0; i < enemies.Count; i++)
+            /*do
             {
-                enemies[i].GetComponent<ObjectReceiveHit>().ReceiveHit(fighterAttributes.Damage);
+                if (currentEnemy.Value == null)
+                {
+                    enemies.Remove(currentEnemy);
+                    currentEnemy = currentEnemy.Next;
+                    continue;
+                }
+                //currentEnemy.Value.GetComponent<ObjectReceiveHit>().ReceiveHit(objectAttributes.Damage);
+                Debug.Log(gameObject.name + " Attack");
+                currentEnemy = currentEnemy.Next;
+            } */
+            /*while (currentEnemy != enemies.Last) 
+            {
+                if (currentEnemy.Value == null)
+                {
+                    enemies.Remove(currentEnemy);
+                    currentEnemy = currentEnemy.Next;
+                    continue;
+                }
+                //currentEnemy.Value.GetComponent<ObjectReceiveHit>().ReceiveHit(objectAttributes.Damage);
+                Debug.Log(gameObject.name + " Attack");
+                currentEnemy = currentEnemy.Next;
+            }*/
+
+            LinkedListNode<GameObject> currentEnemyNode = enemies.First;
+            while (currentEnemyNode != null)
+            {
+                //Debug.Log(gameObject.name + " -> " + currentEnemyNode.Value.name);
+                if (currentEnemyNode != null)
+                {
+                    currentEnemyNode.Value.GetComponent<ObjectReceiveHit>().ReceiveHit(objectAttributes.Damage);
+                    currentEnemyNode = currentEnemyNode.Next;
+                }
             }
 
-            yield return new WaitForSeconds(fighterAttributes.AttackSpeed);
+            //Debug.Log(gameObject.name + " " + enemies.Count);
+
+            yield return new WaitForSeconds(1f / objectAttributes.AttackSpeed);
             isAttacking = false;
         }
     }

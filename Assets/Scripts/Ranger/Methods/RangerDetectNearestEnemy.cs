@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class RangerDetectNearestEnemy : MonoBehaviour
 {
-    [SerializeField] private RangerAttributes rangerAttributes;
+    public RangerAttributes rangerAttributes;
+
     [SerializeField] private string enemyTag;
     [SerializeField] private List<GameObject> enemnies;
     [SerializeField] private GameObject nearestEnemy;
@@ -58,7 +59,6 @@ public class RangerDetectNearestEnemy : MonoBehaviour
                 distance = Vector2.Distance(transform.position, enemy.transform.position);
             }
         }
-        rangerAttributes.NearestEnemy = nearestEnemy;
         return nearestEnemy;
     }
 }

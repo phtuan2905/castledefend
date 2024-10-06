@@ -5,24 +5,13 @@ using UnityEngine;
 
 public class RangerAttributes : MonoBehaviour
 {
-    [SerializeField] private ScriptableObject rangerSO;
-    [SerializeField] private float damage;
-    [SerializeField] private float attackSpeed;
-    [SerializeField] private float range;
-    [SerializeField] private float numberOfAttacks;
+    public ScriptableObject rangerSO;
+    
     [SerializeField] private GameObject bullet;
     [SerializeField] private float bulletSpeed;
-    [SerializeField] private string enemyTag;
+    [SerializeField] private float range;
 
-    [Header("Changable")]
-    [SerializeField] private GameObject nearestEnemy;
-
-    public float Damage { get { return damage; } }
-    public float AttackSpeed { get { return attackSpeed; } }
-    public float Range {  get { return range; } }
-    public float NumberOfAttacks { get { return numberOfAttacks; } }
-    public GameObject Bullet { get { return bullet; } }
-    public float BulletSpeed { get { return bulletSpeed; } }
-    public string EnemyTag { get { return enemyTag; } }
-    public GameObject NearestEnemy { set { nearestEnemy = value; } get { return nearestEnemy; } }
+    public GameObject Bullet { get => bullet; }
+    public float BulletSpeed { get => bulletSpeed; }
+    public float Range { get => range; }
 }

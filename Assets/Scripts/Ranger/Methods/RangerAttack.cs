@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class RangerAttack : MonoBehaviour
 {
-    private RangerAttributes rangerAttributes;
-    private RangerDetectNearestEnemy rangerDetectNearestEnemy;
+    public ObjectAttributes objectAttributes;
+    public RangerAttributes rangerAttributes;
+    public RangerDetectNearestEnemy rangerDetectNearestEnemy;
 
     [SerializeField] private GameObject nearestEnemy;
     [SerializeField] private Vector2 bulletDirection;
 
     void Start()
     {
+        objectAttributes = GetComponent<ObjectAttributes>();
         rangerAttributes = GetComponent<RangerAttributes>();
         rangerDetectNearestEnemy = transform.Find("Detect Zone").GetComponent<RangerDetectNearestEnemy>();
     }
@@ -31,10 +33,10 @@ public class RangerAttack : MonoBehaviour
 
             bulletDirection = nearestEnemy.transform.position - transform.position;
             CircleCollider2D range = transform.Find("Detect Zone").GetComponent<CircleCollider2D>();
-            SpawnBullet(rangerAttributes.Bullet, rangerAttributes.Damage, rangerAttributes.BulletSpeed, bulletDirection, range, rangerAttributes.EnemyTag);
+            SpawnBullet(rangerAttributes.Bullet, objectAttributes.Damage, rangerAttributes.BulletSpeed, bulletDirection, range, objectAttributes.EnemyTag);
             Debug.DrawRay(transform.position, bulletDirection, Color.red, 1f);
 
-            yield return new WaitForSeconds(rangerAttributes.AttackSpeed);
+            yield return new WaitForSeconds(1f / objectAttributes.AttackSpeed);
             
             isAttacking = false;
         }
