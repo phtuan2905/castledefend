@@ -58,6 +58,7 @@ public class FighterAttack : MonoBehaviour
         if (!isAttacking && canAttack)
         {
             isAttacking = true;
+            objectAttributes.IsAttacking = isAttacking;
 
             /*do
             {
@@ -98,7 +99,9 @@ public class FighterAttack : MonoBehaviour
             //Debug.Log(gameObject.name + " " + enemies.Count);
 
             yield return new WaitForSeconds(1f / objectAttributes.AttackSpeed);
+
             isAttacking = false;
+            objectAttributes.IsAttacking = isAttacking;
         }
     }
 }

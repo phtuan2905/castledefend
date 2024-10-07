@@ -30,6 +30,7 @@ public class RangerAttack : MonoBehaviour
         if (nearestEnemy != null && !isAttacking)
         {
             isAttacking = true;
+            objectAttributes.IsAttacking = isAttacking;
 
             bulletDirection = nearestEnemy.transform.position - transform.position;
             CircleCollider2D range = transform.Find("Detect Zone").GetComponent<CircleCollider2D>();
@@ -39,6 +40,7 @@ public class RangerAttack : MonoBehaviour
             yield return new WaitForSeconds(1f / objectAttributes.AttackSpeed);
             
             isAttacking = false;
+            objectAttributes.IsAttacking = isAttacking;
         }
     }
 
