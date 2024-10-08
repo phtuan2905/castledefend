@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class MonsterSpawn : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int monsterNumber;
+    [SerializeField] private int monsterCurrentNumber = 0;
+    [SerializeField] private GameObject monster;
+
+    private void Awake()
     {
-        
+        GameObject monsterClone = Instantiate(monster);
+        monsterClone.transform.position = transform.position;
+        monsterCurrentNumber++;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        
+        if (collision.gameObject.CompareTag("Monster") && monsterCurrentNumber < monsterNumber)
+        {
+            GameObject monsterClone = Instantiate(monster);
+            monsterClone.transform.position = transform.position;
+            monsterCurrentNumber++;
+        }
     }
 }

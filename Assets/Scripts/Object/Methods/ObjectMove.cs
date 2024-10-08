@@ -6,12 +6,14 @@ public class ObjectMove : MonoBehaviour
 {
     public ObjectAttributes objectAttributes;
     public Rigidbody2D rg2D;
+    public CircleCollider2D circleCollider2D;
 
     [SerializeField] private bool canMove;
     void Start()
     {
         objectAttributes = GetComponent<ObjectAttributes>();
         rg2D = GetComponent<Rigidbody2D>();
+        circleCollider2D = GetComponent<CircleCollider2D>();
     }
 
     void Update()
@@ -19,36 +21,9 @@ public class ObjectMove : MonoBehaviour
         Move();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!collision.gameObject.CompareTag(null))
-        {
-            canMove = false;
-        }
-        
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (!collision.gameObject.CompareTag(null))
-        {
-            canMove = false;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (!collision.gameObject.CompareTag(null))
-        {
-            canMove = true;
-        }
-    }
-
     void Move()
     {
-        if (!objectAttributes.IsAttacking && canMove)
-        {
-            transform.Translate(objectAttributes.MoveDirection * objectAttributes.MoveSpeed * Time.deltaTime);
-        }
+        if (objectAttributes.IsAttacking || circleCollider2D.IsTouchingLayers(LayerMask.GetMask("Object"))) return;
+        transform.Translate(objectAttributes.MoveDirection * objectAttributes.MoveSpeed * Time.deltaTime);
     }
 }
