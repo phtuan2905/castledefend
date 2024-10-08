@@ -7,6 +7,7 @@ public class ObjectMove : MonoBehaviour
     public ObjectAttributes objectAttributes;
     public Rigidbody2D rg2D;
 
+    [SerializeField] private bool canMove;
     void Start()
     {
         objectAttributes = GetComponent<ObjectAttributes>();
@@ -18,16 +19,36 @@ public class ObjectMove : MonoBehaviour
         Move();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!collision.gameObject.CompareTag(null))
+        {
+            canMove = false;
+        }
+        
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!collision.gameObject.CompareTag(null))
+        {
+            canMove = false;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (!collision.gameObject.CompareTag(null))
+        {
+            canMove = true;
+        }
+    }
+
     void Move()
     {
-        if (!objectAttributes.IsAttacking)
+        if (!objectAttributes.IsAttacking && canMove)
         {
-            rg2D.velocity = objectAttributes.MoveDirection.normalized * objectAttributes.MoveSpeed;
+            transform.Translate(objectAttributes.MoveDirection * objectAttributes.MoveSpeed * Time.deltaTime);
         }
-        else
-        {
-            rg2D.velocity = Vector2.zero;
-        }
-
     }
 }

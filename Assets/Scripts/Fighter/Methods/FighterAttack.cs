@@ -60,31 +60,6 @@ public class FighterAttack : MonoBehaviour
             isAttacking = true;
             objectAttributes.IsAttacking = isAttacking;
 
-            /*do
-            {
-                if (currentEnemy.Value == null)
-                {
-                    enemies.Remove(currentEnemy);
-                    currentEnemy = currentEnemy.Next;
-                    continue;
-                }
-                //currentEnemy.Value.GetComponent<ObjectReceiveHit>().ReceiveHit(objectAttributes.Damage);
-                Debug.Log(gameObject.name + " Attack");
-                currentEnemy = currentEnemy.Next;
-            } */
-            /*while (currentEnemy != enemies.Last) 
-            {
-                if (currentEnemy.Value == null)
-                {
-                    enemies.Remove(currentEnemy);
-                    currentEnemy = currentEnemy.Next;
-                    continue;
-                }
-                //currentEnemy.Value.GetComponent<ObjectReceiveHit>().ReceiveHit(objectAttributes.Damage);
-                Debug.Log(gameObject.name + " Attack");
-                currentEnemy = currentEnemy.Next;
-            }*/
-
             LinkedListNode<GameObject> currentEnemyNode = enemies.First;
             while (currentEnemyNode != null)
             {
