@@ -19,4 +19,5 @@ public class ButtonClick : MonoBehaviour
             slotsManager.SetActive(false);
         }
     }
+
 }
