@@ -35,4 +35,9 @@ public class ObjectAttributes : MonoBehaviour
     public float MoveSpeedPercent { set => moveSpeedPercent = value; }
 
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
+
+    private void Awake()
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+    }
 }
