@@ -5,6 +5,7 @@ using UnityEngine;
 public class ButtonClick : MonoBehaviour
 {
     public GameObject slotsManager;
+
     public GameObject solider;
     public void PlaceSolider()
     {
@@ -20,4 +21,10 @@ public class ButtonClick : MonoBehaviour
         }
     }
 
+    public GameEventSystem gameEventSystem;
+    public void StartCurrentLevel()
+    {
+        gameEventSystem.StartLevel(0);
+        gameEventSystem.ChangeGameMenu(1);
+    }
 }

@@ -13,6 +13,7 @@ public class ObjectAttributes : MonoBehaviour
     [SerializeField] private string enemyTag;
     [SerializeField] private List<string> selfTags;
     [SerializeField] private Vector2 moveDirection;
+    [SerializeField] private int energy;
 
     [SerializeField] private float healthPercent = 1;
     [SerializeField] private float damagePercent = 1;
@@ -28,6 +29,7 @@ public class ObjectAttributes : MonoBehaviour
     public string EnemyTag { get => enemyTag; }
     public List<string> SelfTags { get => selfTags; }
     public Vector2 MoveDirection { get => moveDirection; set => moveDirection = value; }
+    public int Energy { get => energy; set => energy = value; }
 
     public float HealthPercent { set => healthPercent = value; }
     public float DamagePercent { set => damagePercent = value; }
@@ -38,6 +40,7 @@ public class ObjectAttributes : MonoBehaviour
 
     private void Awake()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+        if (transform.parent != null && transform.parent.GetComponent<ObjectAttributes>() == null) transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+
     }
 }

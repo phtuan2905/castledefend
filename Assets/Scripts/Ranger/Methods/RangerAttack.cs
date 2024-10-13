@@ -21,6 +21,7 @@ public class RangerAttack : MonoBehaviour
     void Update()
     {
         StartCoroutine(Attack());
+
     }
 
     bool isAttacking;
@@ -35,6 +36,7 @@ public class RangerAttack : MonoBehaviour
             bulletDirection = nearestEnemy.transform.position - transform.position;
             CircleCollider2D range = transform.Find("Detect Zone").GetComponent<CircleCollider2D>();
             SpawnBullet(rangerAttributes.Bullet, objectAttributes.Damage, rangerAttributes.BulletSpeed, bulletDirection, range, objectAttributes.EnemyTag);
+            nearestEnemy = null;
             Debug.DrawRay(transform.position, bulletDirection, Color.red, 1f);
 
             yield return new WaitForSeconds(1f / objectAttributes.AttackSpeed);

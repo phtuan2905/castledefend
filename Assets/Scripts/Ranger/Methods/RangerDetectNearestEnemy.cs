@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RangerDetectNearestEnemy : MonoBehaviour
 {
+    public ObjectAttributes objectAttributes;
     public RangerAttributes rangerAttributes;
 
-    [SerializeField] private string enemyTag;
     [SerializeField] private List<GameObject> enemnies;
     [SerializeField] private GameObject nearestEnemy;
     [SerializeField] [Range(0, 20)] private int maxEnemiesNumber;
@@ -15,12 +15,13 @@ public class RangerDetectNearestEnemy : MonoBehaviour
     {
         rangerAttributes = transform.parent.GetComponent<RangerAttributes>();
         range = rangerAttributes.Range;
+        objectAttributes = transform.parent.GetComponent<ObjectAttributes>();
         GetComponent<CircleCollider2D>().radius = range;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(enemyTag) && !enemnies.Contains(collision.gameObject) && enemnies.Count < maxEnemiesNumber)
+        if (collision.gameObject.CompareTag(objectAttributes.EnemyTag) && !enemnies.Contains(collision.gameObject) && enemnies.Count < maxEnemiesNumber)
         {
             enemnies.Add(collision.gameObject);
         }
@@ -28,7 +29,7 @@ public class RangerDetectNearestEnemy : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(enemyTag) && !enemnies.Contains(collision.gameObject) && enemnies.Count < maxEnemiesNumber)
+        if (collision.gameObject.CompareTag(objectAttributes.EnemyTag) && !enemnies.Contains(collision.gameObject) && enemnies.Count < maxEnemiesNumber)
         {
             enemnies.Add(collision.gameObject);
         }
@@ -36,7 +37,7 @@ public class RangerDetectNearestEnemy : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(enemyTag) && enemnies.Contains(collision.gameObject))
+        if (collision.gameObject.CompareTag(objectAttributes.EnemyTag) && enemnies.Contains(collision.gameObject))
         {
             enemnies.Remove(collision.gameObject);
         }
@@ -49,11 +50,13 @@ public class RangerDetectNearestEnemy : MonoBehaviour
             nearestEnemy = null;
             return nearestEnemy;
         }
+
+        if (enemnies[0] == null) return nearestEnemy = null;
         nearestEnemy = enemnies[0];
         float distance = Vector2.Distance(transform.position, nearestEnemy.transform.position);
         foreach (GameObject enemy in enemnies)
         {
-            if (Vector2.Distance(transform.position, enemy.transform.position) < distance)
+            if (enemy != null && Vector2.Distance(transform.position, enemy.transform.position) < distance)
             {
                 nearestEnemy = enemy;
                 distance = Vector2.Distance(transform.position, enemy.transform.position);

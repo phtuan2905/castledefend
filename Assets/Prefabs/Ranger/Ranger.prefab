@@ -161,8 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ce2c5c4ea263e4187221a7c31cd77a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectAttributes: {fileID: 0}
   rangerAttributes: {fileID: 0}
-  enemyTag: Monster
   enemnies: []
   nearestEnemy: {fileID: 0}
   maxEnemiesNumber: 10
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangerSO: {fileID: 0}
-  bullet: {fileID: 0}
+  bullet: {fileID: 7694471580669032353, guid: eac602bd3378be245a94e163689d9907, type: 3}
   bulletSpeed: 5
   range: 5
 --- !u!114 &8841743475548694011

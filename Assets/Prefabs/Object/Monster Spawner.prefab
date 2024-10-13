@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8500642930612626749}
   - component: {fileID: 7067593943778256915}
   - component: {fileID: 3789827623772133255}
-  - component: {fileID: 3576244305002488680}
   m_Layer: 0
   m_Name: Monster Spawner
   m_TagString: Untagged
@@ -163,18 +162,3 @@ PolygonCollider2D:
       - {x: -0.4, y: 0}
       - {x: 0, y: 0.2309401}
   m_UseDelaunayMesh: 0
---- !u!114 &3576244305002488680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6001319760517478144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffdf600600da4874d9a7cf5a398d7eed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  monsterNumber: 0
-  monsterCurrentNumber: 0
-  monster: {fileID: 0}
