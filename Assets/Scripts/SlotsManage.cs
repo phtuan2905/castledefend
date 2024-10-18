@@ -5,4 +5,5 @@ using UnityEngine;
 public class SlotsManage : MonoBehaviour
 {
     public GameObject solider;
+    public bool isHolding;
 }

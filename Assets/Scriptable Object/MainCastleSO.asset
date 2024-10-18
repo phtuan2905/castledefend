@@ -9,9 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e0cf04d53e897d45a566fdc95e59168, type: 3}
-  m_Name: Level1Script
+  m_Script: {fileID: 11500000, guid: 9a9e2e2b752e6f44f8ef1ba785178f41, type: 3}
+  m_Name: MainCastleSO
   m_EditorClassIdentifier: 
-  monstersList:
-  - monster: {fileID: 7671632220964903140, guid: ed6cf175c39b69d4eaaadb00bf5dc8ea, type: 3}
-    number: 20
+  health: 50
+  damage: 0
+  attackSpeed: 0
+  moveSpeed: 0
+  enemyTag: Monster
+  selfTags: []
+  moveDirection: {x: 0, y: 0}
+  energy: 100

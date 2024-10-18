@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlotClick : MonoBehaviour
+public class SlotChoose : MonoBehaviour
 {
     public PolygonCollider2D polygonCollider2D;
     public SpriteRenderer spriteRenderer;
@@ -19,7 +19,6 @@ public class SlotClick : MonoBehaviour
         if (!polygonCollider2D.IsTouchingLayers(LayerMask.GetMask("Object")))
         {
             spriteRenderer.color = Color.green;
-            Debug.Log("It work");
             return;
         }
         spriteRenderer.color = Color.red;
@@ -31,7 +30,7 @@ public class SlotClick : MonoBehaviour
         {
             GameObject soliderClone = Instantiate(transform.parent.GetComponent<SlotsManage>().solider);
             soliderClone.transform.position = transform.position;
-            transform.parent.gameObject.SetActive(false);
+            if (!transform.parent.GetComponent<SlotsManage>().isHolding) { transform.parent.gameObject.SetActive(false); }
         }
     }
 }

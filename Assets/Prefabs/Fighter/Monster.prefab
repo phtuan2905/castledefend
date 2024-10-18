@@ -187,15 +187,17 @@ MonoBehaviour:
   health: 20
   damage: 5
   attackSpeed: 1
-  moveSpeed: 0.25
+  moveSpeed: 0.5
   enemyTag: Human
   selfTags: []
   moveDirection: {x: -1, y: 0.5773503}
+  energy: 0
   healthPercent: 1
   damagePercent: 1
   attackSpeedPercent: 1
   moveSpeedPercent: 1
   isAttacking: 0
+  gameEventSystem: {fileID: 0}
 --- !u!114 &5151499611822489909
 MonoBehaviour:
   m_ObjectHideFlags: 0
